@@ -14,7 +14,7 @@ import io
 import json
 
 # --- 1. 환경 및 폰트 설정 ---
-font_path = "NanumSquare.ttf"
+font_path = "NanumSquareRoundB.ttf"
 if os.path.exists(font_path):
     fm.fontManager.addfont(font_path)
     font_prop = fm.FontProperties(fname=font_path)
