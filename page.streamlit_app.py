@@ -215,7 +215,7 @@ def generate_jeet_expert_report(target_name, selected_test):
                 fig.patches.append(rect_diag)
                 fig.text(0.11, 0.44, "▶ ", fontsize=15, fontweight='bold', color=COLOR_NAVY)
                 fig.text(0.13, 0.44, "JEET", fontsize=15, fontweight='bold', color='red')
-                fig.text(0.24, 0.44, f" {student_name} 학생 심층 분석", fontsize=15, fontweight='bold', color=COLOR_NAVY)
+                fig.text(0.16, 0.44, f" {student_name} 학생 심층 분석", fontsize=15, fontweight='bold', color=COLOR_NAVY)
                 
                 avg_val, total_avg_val = int(cat_ratio.mean()), int(avg_cat_ratio.mean())
                 diff_val = avg_val - total_avg_val
