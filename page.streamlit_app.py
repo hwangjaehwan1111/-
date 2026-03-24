@@ -42,7 +42,7 @@ def get_google_sheet():
         
     creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
     client = gspread.authorize(creds)
-    doc = client.open_by_url("https://docs.google.com/spreadsheets/d/1KK34qtg_Wh4xnlsJ2z7JSvD-2K0coHLgtD-0XRivuz0/edit?pli=1&gid=0#gid=0")
+    doc = client.open_by_url("https://docs.google.com/spreadsheets/d/1KK34qtg_Wh4xnlsJ2z7JSvD-2K0coHLgtD-0XRivuz0/edit?gid=0#gid=0")
     return doc
 
 @st.cache_data(ttl=120)
@@ -125,14 +125,14 @@ def generate_jeet_expert_report(target_name, selected_test):
                     logo_ax.imshow(logo_img)
                     logo_ax.axis('off')
 
-                fig.text(0.31, 0.88, 'JEET', fontsize=42, fontweight='bold', color='red', ha='right')
+                fig.text(0.31, 0.88, 'JEET', fontsize=32, fontweight='bold', color='red', ha='right')
                 fig.text(0.33, 0.88, '수학 능력 분석 리포트', fontsize=32, fontweight='bold', color=COLOR_NAVY, ha='left')
                 
                 info_text = f"학교: {s_row.get('학교', '')}  |  학년: {student_grade}  |  이름: {student_name}  |  과정: {selected_test}"
                 fig.text(0.5, 0.84, info_text, ha='center', fontsize=15, fontweight='bold', color='#222')
                 #
         
-                ax1 = fig.add_axes([0.10, 0.52, 0.32, 0.22], polar=True)
+                ax1 = fig.add_axes([0.15, 0.52, 0.32, 0.22], polar=True)
                 all_cats = cat_ratio.index.tolist()
                 ordered_labels = ['수리 연산'] + [c for c in all_cats if c != '수리 연산'] if '수리 연산력' in all_cats else all_cats
                 s_ordered = cat_ratio.reindex(ordered_labels)
@@ -205,7 +205,7 @@ def generate_jeet_expert_report(target_name, selected_test):
                 ax2.spines['left'].set_visible(False)
                 ax2.spines['bottom'].set_color(COLOR_GRID)
                 ax2.set_yticks([]) 
-                fig.text(0.26, 0.78, "▶ 영역별 핵심 역량 지표 (%)", fontsize=14, fontweight='bold', color=COLOR_NAVY, ha='center')
+                fig.text(0.31, 0.78, "▶ 영역별 핵심 역량 지표 (%)", fontsize=14, fontweight='bold', color=COLOR_NAVY, ha='center')
                 fig.text(0.725, 0.78, "▶ 단원별 성취도", fontsize=14, fontweight='bold', color=COLOR_NAVY, ha='center')
                 # --- 새로운 단원별 성취도 오버랩 바 차트 끝 ---
         
@@ -214,8 +214,8 @@ def generate_jeet_expert_report(target_name, selected_test):
                 rect_diag = plt.Rectangle((0.08, 0.15), 0.84, 0.32, fill=True, facecolor=COLOR_BG, edgecolor=COLOR_GRID, transform=fig.transFigure)
                 fig.patches.append(rect_diag)
                 fig.text(0.11, 0.44, "▶ ", fontsize=15, fontweight='bold', color=COLOR_NAVY)
-                fig.text(0.13, 0.44, " JEET", fontsize=15, fontweight='bold', color='red')
-                fig.text(0.185, 0.44, f"   중등 수학 교육원 {student_name} 학생 심층 분석", fontsize=15, fontweight='bold', color=COLOR_NAVY)
+                fig.text(0.13, 0.44, "JEET", fontsize=15, fontweight='bold', color='red')
+                fig.text(0.24, 0.44, f" {student_name} 학생 심층 분석", fontsize=15, fontweight='bold', color=COLOR_NAVY)
                 
                 avg_val, total_avg_val = int(cat_ratio.mean()), int(avg_cat_ratio.mean())
                 diff_val = avg_val - total_avg_val
@@ -241,7 +241,7 @@ def generate_jeet_expert_report(target_name, selected_test):
                 diag_content = (
                     f"1. 종합 진단: {student_name} 학생은 전체 평균({total_avg_val}%) 대비 성취도 {avg_val}%를 기록하며, 현재 [{eval_tier}]를 보여주고 있습니다.\n\n"
                     f"2. 강약점 분석: 영역별 분석 결과 '{best_cat}'에서 뛰어난 역량이 확인되나, 상대적으로 '{worst_cat}' 역량의 보완이 이루어진다면 더 큰 성장이 기대됩니다. 특히 '{worst_unit}' 단원의 핵심 개념을 다시 한번 점검해 볼 필요가 있습니다.\n\n"
-                    f"3. JEET 맞춤 솔루션: 단기적으로는 '{worst_unit}' 단원의 오답 노트를 작성하며 취약 유형에 익숙해지는 시간을 가져야 합니다. 중장기적으로 '{worst_cat}' 역량을 끌어올리기 위해 {worst_solution}"
+                    f"3. JEET 중등수학 맞춤 솔루션: 단기적으로는 '{worst_unit}' 단원의 오답 노트를 작성하며 취약 유형에 익숙해지는 시간을 가져야 합니다. 중장기적으로 '{worst_cat}' 역량을 끌어올리기 위해 {worst_solution}"
                 )
                 wrapped_lines = [textwrap.fill(p, width=54) for p in diag_content.split('\n\n')]
                 fig.text(0.11, 0.41, "\n\n".join(wrapped_lines), fontsize=10.5, linespacing=1.8, va='top', ha='left', color='#333')
@@ -259,9 +259,9 @@ def generate_jeet_expert_report(target_name, selected_test):
     except Exception as e: return False, None, f"오류 발생: {traceback.format_exc()}"
 
 # --- 4. Streamlit 웹 UI 구성 ---
-st.set_page_config(page_title="JEET 통합 관리 시스템", layout="wide", page_icon="📊")
+st.set_page_config(page_title="JEET수학 통합 관리 시스템", layout="wide", page_icon="📊")
 col1, col2 = st.columns([8, 2])
-with col1: st.title("📊 JEET 광교캠퍼스 성적 통합 관리 시스템")
+with col1: st.title("📊 JEET수학 성적 통합 관리 시스템")
 with col2: 
     if os.path.exists("logo.png"): st.image("logo.png", width=150)
 
