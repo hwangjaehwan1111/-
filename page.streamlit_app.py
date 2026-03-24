@@ -167,7 +167,7 @@ def generate_jeet_expert_report(target_name, selected_test):
                 #
                 
                 # --- 새로운 단원별 성취도 오버랩 바 차트 시작 ---
-                ax2 = fig.add_axes([0.55, 0.52, 0.35, 0.20])
+                ax2 = fig.add_axes([0.55, 0.52, 0.35, 0.22])
                 x_pos = np.arange(len(unit_data))
                 
                 # 1. 전체 평균 (두껍고 연한 배경 막대)
@@ -181,10 +181,10 @@ def generate_jeet_expert_report(target_name, selected_test):
                 ax2.set_xticklabels([textwrap.fill(str(l), 5) for l in unit_data.index], fontsize=8, fontweight='bold', color=COLOR_NAVY)
                 max_val = unit_data['배점'].max()
                 max_val = 10 if pd.isna(max_val) or max_val == 0 else max_val
-                ax2.set_ylim(0, max_val * 1.4) # 숫자 라벨을 위한 위쪽 여백
+                ax2.set_ylim(0, max_val * 1.25) # 숫자 라벨을 위한 위쪽 여백
 
                 #
-                ax2.legend(loc='upper center', bbox_to_anchor=(0.5, 1.25), ncol=2, fontsize=8, frameon=False)
+                ax2.legend(loc='upper center', bbox_to_anchor=(0.5, 1.15), ncol=2, fontsize=8, frameon=False)
                 #
                 ax2.grid(axis='y', color=COLOR_GRID, linestyle='--', linewidth=0.5, zorder=0)
                 
