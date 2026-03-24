@@ -132,7 +132,7 @@ def generate_jeet_expert_report(target_name, selected_test):
                 fig.text(0.5, 0.84, info_text, ha='center', fontsize=15, fontweight='bold', color='#222')
                 #
         
-                ax1 = fig.add_axes([0.15, 0.52, 0.32, 0.22], polar=True)
+                ax1 = fig.add_axes([0.08, 0.52, 0.32, 0.22], polar=True)
                 all_cats = cat_ratio.index.tolist()
                 ordered_labels = ['수리 연산'] + [c for c in all_cats if c != '수리 연산'] if '수리 연산력' in all_cats else all_cats
                 s_ordered = cat_ratio.reindex(ordered_labels)
@@ -167,7 +167,7 @@ def generate_jeet_expert_report(target_name, selected_test):
                 #
                 
                 # --- 새로운 단원별 성취도 오버랩 바 차트 시작 ---
-                ax2 = fig.add_axes([0.55, 0.53, 0.35, 0.22])
+                ax2 = fig.add_axes([0.58, 0.53, 0.35, 0.22])
                 x_pos = np.arange(len(unit_data))
                 
                 # 1. 전체 평균 (두껍고 연한 배경 막대)
@@ -205,8 +205,8 @@ def generate_jeet_expert_report(target_name, selected_test):
                 ax2.spines['left'].set_visible(False)
                 ax2.spines['bottom'].set_color(COLOR_GRID)
                 ax2.set_yticks([]) 
-                fig.text(0.31, 0.78, "▶ 영역별 핵심 역량 지표 (%)", fontsize=14, fontweight='bold', color=COLOR_NAVY, ha='center')
-                fig.text(0.725, 0.78, "▶ 단원별 성취도", fontsize=14, fontweight='bold', color=COLOR_NAVY, ha='center')
+                fig.text(0.24, 0.78, "▶ 영역별 핵심 역량 지표 (%)", fontsize=14, fontweight='bold', color=COLOR_NAVY, ha='center')
+                fig.text(0.755, 0.78, "▶ 단원별 성취도", fontsize=14, fontweight='bold', color=COLOR_NAVY, ha='center')
                 # --- 새로운 단원별 성취도 오버랩 바 차트 끝 ---
         
   
