@@ -134,7 +134,7 @@ def generate_jeet_expert_report(target_name, selected_test):
         
                 ax1 = fig.add_axes([0.10, 0.52, 0.32, 0.22], polar=True)
                 all_cats = cat_ratio.index.tolist()
-                ordered_labels = ['계산력'] + [c for c in all_cats if c != '계산력'] if '계산력' in all_cats else all_cats
+                ordered_labels = ['수리 연산'] + [c for c in all_cats if c != '수리 연산'] if '수리 연산력' in all_cats else all_cats
                 s_ordered = cat_ratio.reindex(ordered_labels)
                 a_ordered = avg_cat_ratio.reindex(ordered_labels)
                 labels = s_ordered.index.tolist()
@@ -231,10 +231,10 @@ def generate_jeet_expert_report(target_name, selected_test):
                 else: eval_tier = "기초를 다지며 가능성을 키워가는 단계의 성취도"
                 
                 solution_dict = {
-                    '계산력': "꾸준한 연산 연습을 통해 풀이의 정확도와 속도를 높여 나간다면 실전에서 더욱 빛을 발할 것입니다.",
-                    '이해력': "백지에 핵심 개념을 직접 정리해보는 습관을 통해 학습의 뼈대를 더욱 단단하게 만드는 과정이 큰 도움이 될 것입니다.",
-                    '추론력': "어려운 문제도 차근차근 단계별로 분석하며 출제 의도를 파악하는 훈련을 병행하여 사고의 깊이를 더해 가길 권장합니다.",
-                    '문제해결력': "다양한 유형이 복합된 심화 문제를 끝까지 스스로 해결해보는 경험을 통해 수학적 자신감을 한층 높여 나갈 시점입니다."
+                    '수리 연산': "빠르고 정확한 연산은 수학의 든든한 밑거름입니다. 꾸준한 연습을 통해 풀이 속도와 정확도를 높여간다면 실전에서 실수를 크게 줄일 수 있습니다.",
+                    '개념 이해': "눈으로 보는 학습을 넘어, 핵심 개념을 백지에 직접 정리하고 스스로 설명해보는 과정을 통해 수학의 뼈대를 단단하게 다지는 시간이 필요합니다.",
+                    '논리 추론': "문제에 숨겨진 출제 의도를 파악하고, 여러 조건들을 연결해 차근차근 해결의 실마리를 찾는 논리적 전개 훈련이 사고의 깊이를 더해줄 것입니다.",
+                    '실전 응용': "다양한 개념이 복합된 고난도 문제를 끝까지 스스로 고민하고 해결해보는 끈기 있는 경험을 통해 최상위권으로 확실하게 도약할 수 있습니다."
                 }
                 worst_solution = solution_dict.get(worst_cat, "부족한 부분을 맞춤 클리닉으로 채워 나간다면 충분히 더 큰 도약이 가능합니다.")
 
