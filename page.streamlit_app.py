@@ -334,7 +334,7 @@ with tab2:
     
     # 2. UI 레이아웃 구성
     # 학생 선택 셀렉트박스
-    target_s = st.selectbox("리포트 출력 학생 선택:", ["선택하세요Status"] + c_s_list)
+    target_s = st.selectbox("리포트 출력 학생 선택:", ["선택하세요"] + c_s_list)
     
     st.markdown("---") # 시각적 구분선
     
