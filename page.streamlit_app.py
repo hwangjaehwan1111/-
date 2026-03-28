@@ -327,18 +327,41 @@ with tab1:
 
 with tab2:
     st.subheader(f"[{selected_test}] 분석 리포트 생성")
+    
+    # 1. 학생 리스트 필터링 (일괄 출력 옵션 제거)
     r_s_list = df_results_all[df_results_all['시험명'] == selected_test]['이름'].dropna().unique().tolist()
     c_s_list = sorted([str(n).strip() for n in r_s_list if str(n).strip() not in ['', '0']])
     
-    target_s = st.selectbox("리포트 출력 학생:", ["선택하세요", "🌟 전체 학생 일괄 출력"] + c_s_list)
+    # 2. UI 레이아웃 구성
+    # 학생 선택 셀렉트박스
+    target_s = st.selectbox("리포트 출력 학생 선택:", ["선택하세요Status"] + c_s_list)
     
-    if st.button("PDF 리포트 생성", type="primary"):
-        if target_s == "선택하세요": st.warning("⚠️ 학생을 선택해주세요!")
-        else:
-            actual_t = "전체" if target_s == "🌟 전체 학생 일괄 출력" else target_s
-            with st.spinner("리포트 생성 중..."):
-                succ, buf, m = generate_jeet_expert_report(actual_t, selected_test)
-                if succ: 
-                    st.success(m)
-                    st.download_button("📥 PDF 다운로드", buf, f"{target_s}_리포트.pdf", "application/pdf")
-                else: st.error(m)
+    st.markdown("---") # 시각적 구분선
+    
+    # 3. 버튼 배치 (좌측: 일괄 출력 / 우측: 개별 생성)
+    col_batch, col_space, col_individual = st.columns([1.5, 2, 1.5])
+    
+    with col_batch:
+        # 전체 학생 출력 버튼 (강조 색상 없이 별도 배치)
+        if st.button("🌟 전체 학생 일괄 생성", use_container_width=True, help="현재 과정의 모든 학생 리포트를 하나의 파일로 합쳐서 생성합니다."):
+            with st.spinner("전체 리포트 생성 중... (시간이 다소 소요될 수 있습니다)"):
+                succ, buf, m = generate_jeet_expert_report("전체", selected_test)
+                if succ:
+                    st.success("✅ 전체 리포트 생성 완료!")
+                    st.download_button("📥 전체 PDF 다운로드", buf, f"{selected_test}_전체_리포트.pdf", "application/pdf", use_container_width=True)
+                else:
+                    st.error(m)
+
+    with col_individual:
+        # 개별 리포트 생성 버튼 (기존 기능, 하단 배치)
+        if st.button("PDF 리포트 생성", type="primary", use_container_width=True):
+            if target_s == "선택하세요Status":
+                st.warning("⚠️ 학생을 선택해주세요!")
+            else:
+                with st.spinner(f"{target_s} 학생 리포트 생성 중..."):
+                    succ, buf, m = generate_jeet_expert_report(target_s, selected_test)
+                    if succ:
+                        st.success(m)
+                        st.download_button(f"📥 {target_s} PDF 다운로드", buf, f"{target_s}_리포트.pdf", "application/pdf", use_container_width=True)
+                    else:
+                        st.error(m)
